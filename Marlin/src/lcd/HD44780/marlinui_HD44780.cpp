@@ -772,7 +772,8 @@ void MarlinUI::draw_status_message(const bool blink) {
 #if HAS_PRINT_PROGRESS
 
   #define TPOFFSET (LCD_WIDTH - 1)
-  static uint8_t timepos = TPOFFSET - 6;
+  // [2024-04-28 hlo-world] timepos is 2 chars earlier due to changes to drawPercent() and drawElapsed() 
+  static uint8_t timepos = TPOFFSET - 8;
   static char buffer[8];
 
   #if ENABLED(SHOW_PROGRESS_PERCENT)
@@ -782,7 +783,8 @@ void MarlinUI::draw_status_message(const bool blink) {
       const uint8_t progress = ui.get_progress_percent();
       if (progress) {
         lcd_moveto(pc, pr);
-        lcd_put_u8str(F(TERN(IS_SD_PRINTING, "SD", "P:")));
+        // [2024-04-28 hlo-world] Removed colon from "P:" to save a char
+        lcd_put_u8str(F(TERN(IS_SD_PRINTING, "SD", "P")));
         lcd_put_u8str(TERN(PRINT_PROGRESS_SHOW_DECIMALS, permyriadtostr4(ui.get_progress_permyriad()), ui8tostr3rj(progress)));
         lcd_put_u8str(F("%"));
       }
@@ -817,9 +819,12 @@ void MarlinUI::draw_status_message(const bool blink) {
     void MarlinUI::drawElapsed() {
       if (printJobOngoing()) {
         const duration_t elapsedt = print_job_timer.duration();
-        timepos = TPOFFSET - elapsedt.toDigital(buffer);
-        TERN_(NOT(LCD_INFO_SCREEN_STYLE), lcd_put_lchar(timepos - 1, 2, 0x20);)
-        lcd_put_lchar(TERN(LCD_INFO_SCREEN_STYLE, 11, timepos), 2, 'E');
+        // [2024-04-28 hlo-world] Use toTrimmedString with enableDayHourMinute for time 
+        timepos = TPOFFSET - elapsedt.toTrimmedString(buffer, true);
+        // [2024-04-28 hlo-world] Don't put a space here to save a char
+        // TERN_(NOT(LCD_INFO_SCREEN_STYLE), lcd_put_lchar(timepos - 1, 2, 0x20);)
+        // [2024-05-25 hlo-world] Use 'T' instead of 'E' to convey elapsed time
+        lcd_put_lchar(TERN(LCD_INFO_SCREEN_STYLE, 11, timepos), 2, 'T');
         lcd_put_u8str(buffer);
       }
     }
