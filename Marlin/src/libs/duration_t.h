@@ -211,5 +211,45 @@ struct duration_t {
     }
   }
 
+  // [2024-04-28 hlo-world] Added trimmed string for time
+  /**
+   * @brief Format the duration as a string with trimmed information to keep string short
+   * @details String will be formatted to a trimmed representation of duration
+   *
+   * @param buffer The array pointed to must be able to accommodate 10 bytes
+   * @return length of the formatted string (without terminating nul)
+   *
+   * Output examples:
+   *  123456789 (strlen)
+   *  1d12h33 (enableDayHourMinute)
+   *  12m34
+   *  99h59
+   *  99d12
+   */
+  uint8_t toTrimmedString(char *buffer, bool enableDayHourMinute=false) const {
+    const uint16_t h = uint16_t(this->hour()),
+                   m = uint16_t(this->minute() % 60UL);
+    if (enableDayHourMinute) {
+      const uint16_t d = this->day();
+      sprintf_P(buffer, PSTR("%hud%02huh%02hu"), d, h % 24, m);  // 1d23h45
+      // [2024-05-25 hlo-world] Hardcode return instead of strlen_P(buffer) because it gave wrong result
+      return 7;
+    }
+    else if (!h) {
+      const uint16_t s = uint16_t(this->second() % 60UL);
+      sprintf_P(buffer, PSTR("%02hum%02hu"), m, s);     // 12m34
+      return 5;
+    }
+    else if (h < 24) {
+      sprintf_P(buffer, PSTR("%02huh%02hu"), h, m);     // 12h34
+      return 5;
+    }
+    else {
+      const uint16_t d = this->day();
+      sprintf_P(buffer, PSTR("%hud%02huu"), d, h % 24); // 12d34
+      return 5;
+    }
+  }
+
   #pragma GCC diagnostic pop
 };
