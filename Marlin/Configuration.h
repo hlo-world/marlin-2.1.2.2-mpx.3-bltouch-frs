@@ -1233,7 +1233,8 @@
 // Z Axis, 3200 / lead 8mm pitch (4-start) = 200*16 / 8.00 =  400 :: (STEPS_PER_REVOLUTION_Z / PITCH_OF_Z_ROD)
 // E-Axis, 3200 / (11.00mm Gear OD*pi) = 200*16 /(11*3.14) = 92.6 :: (STEPS_PER_REVOLUTION_E * EXTRUDER_GEAR_RATIO / (PINCH_WHEEL_DIAMETER * PI))
 // E-Axis, DEFAULT_FROM_HICTOP_FIRMWARE              = 94.4962144 :: DEFAULT_FROM_HICTOP_FIRMWARE
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 94.4962144 }
+// E-Axis, ADJUSTED_FROM_TEACHING_TECH_ESTEPS_CALIB  = 96.9191919 :: ADJUSTED_FROM_TEACHING_TECH_ESTEPS_CALIB
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 96.9191919 }
 
 /**
  * Default Max Feed Rate (linear=mm/s, rotational=°/s)
@@ -1268,9 +1269,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          1500    // X, Y, Z and E acceleration for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  1500    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   1500    // X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_ACCELERATION          1000    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_RETRACT_ACCELERATION  1000    // E acceleration for retracts
+#define DEFAULT_TRAVEL_ACCELERATION   1000    // X, Y, Z acceleration for travel (non printing) moves
 
 /**
  * Default Jerk limits (mm/s)
@@ -1311,7 +1312,7 @@
  *   Junction Deviation = 0.4 * Jerk * Jerk / (X and/or Y Acceleration) 
  */
 #if DISABLED(CLASSIC_JERK)
-  #define JUNCTION_DEVIATION_MM 0.032267 // (mm) Distance from real junction edge
+  #define JUNCTION_DEVIATION_MM 0.0484   // (mm) Distance from real junction edge
   #define JD_HANDLE_SMALL_SEGMENTS       // Use curvature estimation instead of just the junction angle
                                          // for small segments (< 1mm) with large junction angles (> 135°).
 #endif
@@ -1543,7 +1544,7 @@
  *
  *   For SN04-N { 10, 63, 0.5 }
  *   For TL-W3MC2Y { 0, 25, ? }
- *   For BLTOUCH { -17.7, -47.0, -2.95 }
+ *   For BLTOUCH { -17.7, -47.0, around -1.00 to -3.00, adjust in EEPROM (more negative sinks nozzle lower) }
  *
  *     +-- BACK ---+
  *     |    [+]    |
@@ -1555,10 +1556,10 @@
  *     |    [-]    |
  *     O-- FRONT --+
  *
- *   Z probe offset: -below +above  [the nozzle]
+ *   Z probe offset: -below +above [the nozzle]
  *
  */
-#define NOZZLE_TO_PROBE_OFFSET { -17.7, -47.0, -2.95 }
+#define NOZZLE_TO_PROBE_OFFSET { -17.7, -47.0, -1.90 }
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
