@@ -1309,12 +1309,12 @@
  * See:
  *   https://reprap.org/forum/read.php?1,739819
  *   https://blog.kyneticcnc.com/2018/10/computing-junction-deviation-for-marlin.html
- *   Junction Deviation = 0.4 * Jerk * Jerk / (X and/or Y Acceleration) 
+ *   Junction Deviation = 0.4 * Jerk * Jerk / Acceleration
+ *   In below formula, we use Jerk and Accel of X axis
  */
 #if DISABLED(CLASSIC_JERK)
-  #define JUNCTION_DEVIATION_MM 0.0484   // (mm) Distance from real junction edge
-  #define JD_HANDLE_SMALL_SEGMENTS       // Use curvature estimation instead of just the junction angle
-                                         // for small segments (< 1mm) with large junction angles (> 135°).
+  #define JUNCTION_DEVIATION_MM 0.4 * DEFAULT_XJERK * DEFAULT_XJERK / DEFAULT_ACCELERATION // (mm) Distance from real junction edge
+  #define JD_HANDLE_SMALL_SEGMENTS                                                         // Use curvature estimation instead of just the junction angle for small segments (< 1mm) with large junction angles (> 135°).
 #endif
 
 /**
@@ -2170,12 +2170,8 @@
 #define Z_SAFE_HOMING
 
 #if ENABLED(Z_SAFE_HOMING)
-  // #define Z_SAFE_HOMING_X_POINT X_CENTER  // (mm) X point for Z homing
-  // #define Z_SAFE_HOMING_Y_POINT Y_CENTER  // (mm) Y point for Z homing
-
-  // [2024-04-21 hlo-world] Instead of Center, set it to PROBING_MARGIN
-  #define Z_SAFE_HOMING_X_POINT PROBING_MARGIN // (mm) X point for Z homing
-  #define Z_SAFE_HOMING_Y_POINT PROBING_MARGIN // (mm) Y point for Z homing
+  #define Z_SAFE_HOMING_X_POINT X_CENTER  // (mm) X point for Z homing
+  #define Z_SAFE_HOMING_Y_POINT Y_CENTER  // (mm) Y point for Z homing
 #endif
 
 // Homing speeds (linear=mm/min, rotational=°/min)
