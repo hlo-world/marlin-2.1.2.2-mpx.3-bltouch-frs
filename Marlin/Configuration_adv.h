@@ -2111,13 +2111,14 @@
  * See https://marlinfw.org/docs/features/lin_advance.html for full instructions.
  *
  * [2024-06-11 hlo-world] Set K at 0.12 to begin with, inferred from scaling down 3mm diam to 1.75mm
+ * [2024-06-13 hlo-world] Set K at 1.10 after testing with https://marlinfw.org/tools/lin_advance/k-factor.html
  */
 #define LIN_ADVANCE
 #if ENABLED(LIN_ADVANCE)
   #if ENABLED(DISTINCT_E_FACTORS)
-    #define ADVANCE_K { 0.12 }    // (mm) Compression length per 1mm/s extruder speed, per extruder
+    #define ADVANCE_K { 1.10 }    // (mm) Compression length per 1mm/s extruder speed, per extruder
   #else
-    #define ADVANCE_K 0.12        // (mm) Compression length applying to all extruders
+    #define ADVANCE_K 1.10        // (mm) Compression length applying to all extruders
   #endif
   //#define ADVANCE_K_EXTRA       // Add a second linear advance constant, configurable with M900 L.
   //#define LA_DEBUG              // Print debug information to serial during operation. Disable for production use.
