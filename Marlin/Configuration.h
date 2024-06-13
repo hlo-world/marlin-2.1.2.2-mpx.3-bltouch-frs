@@ -1301,7 +1301,8 @@
   #endif
 #endif
 
-#define DEFAULT_EJERK    5.0  // May be used by Linear Advance
+#define DEFAULT_JERK  11.0  // Used by Junction Deviation when CLASSIC_JERK is disabled
+#define DEFAULT_EJERK  5.0  // May be used by Linear Advance
 
 /**
  * Junction Deviation Factor
@@ -1313,8 +1314,8 @@
  *   In below formula, we use Jerk and Accel of X axis
  */
 #if DISABLED(CLASSIC_JERK)
-  #define JUNCTION_DEVIATION_MM 0.4 * DEFAULT_XJERK * DEFAULT_XJERK / DEFAULT_ACCELERATION // (mm) Distance from real junction edge
-  #define JD_HANDLE_SMALL_SEGMENTS                                                         // Use curvature estimation instead of just the junction angle for small segments (< 1mm) with large junction angles (> 135°).
+  #define JUNCTION_DEVIATION_MM 0.4 * DEFAULT_JERK * DEFAULT_JERK / DEFAULT_ACCELERATION // (mm) Distance from real junction edge
+  #define JD_HANDLE_SMALL_SEGMENTS                                                       // Use curvature estimation instead of just the junction angle for small segments (< 1mm) with large junction angles (> 135°).
 #endif
 
 /**
