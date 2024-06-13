@@ -2111,18 +2111,18 @@
  * See https://marlinfw.org/docs/features/lin_advance.html for full instructions.
  *
  * [2024-06-11 hlo-world] Set K at 0.12 to begin with, inferred from scaling down 3mm diam to 1.75mm
- * [2024-06-13 hlo-world] Set K at 0.05, drawing reference to https://github.com/MarlinFirmware/Marlin/issues/10156
+ * [2024-06-13 hlo-world] Set K at 0.06, drawing reference to https://github.com/MarlinFirmware/Marlin/issues/10156
  */
 #define LIN_ADVANCE
 #if ENABLED(LIN_ADVANCE)
   #if ENABLED(DISTINCT_E_FACTORS)
-    #define ADVANCE_K { 0.05 }    // (mm) Compression length per 1mm/s extruder speed, per extruder
+    #define ADVANCE_K { 0.06 }    // (mm) Compression length per 1mm/s extruder speed, per extruder
   #else
-    #define ADVANCE_K 0.05        // (mm) Compression length applying to all extruders
+    #define ADVANCE_K 0.06        // (mm) Compression length applying to all extruders
   #endif
   //#define ADVANCE_K_EXTRA       // Add a second linear advance constant, configurable with M900 L.
   //#define LA_DEBUG              // Print debug information to serial during operation. Disable for production use.
-  #define ALLOW_LOW_EJERK       // Allow a DEFAULT_EJERK value of <10. Recommended for direct drive hotends.
+  #define ALLOW_LOW_EJERK         // Allow a DEFAULT_EJERK value of <10. Recommended for direct drive hotends.
   //#define EXPERIMENTAL_I2S_LA   // Allow I2S_STEPPER_STREAM to be used with LA. Performance degrades as the LA step rate reaches ~20kHz.
 #endif
 
