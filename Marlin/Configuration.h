@@ -1241,11 +1241,11 @@
  * Override with M203
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 500, 500, 10, 60 }
+#define DEFAULT_MAX_FEEDRATE          { 500, 500, 20, 60 }
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
-  #define MAX_FEEDRATE_EDIT_VALUES    { 1000, 1000, 20, 120 } // ...or, set your own edit limits
+  #define MAX_FEEDRATE_EDIT_VALUES    { 1000, 1000, 40, 120 } // ...or, set your own edit limits
 #endif
 
 /**
@@ -1299,10 +1299,11 @@
   #if ENABLED(LIMITED_JERK_EDITING)
     #define MAX_JERK_EDIT_VALUES { 20, 20, 0.6, 10 } // ...or, set your own edit limits
   #endif
+#else
+  #define DEFAULT_JERK  11.0 // Used by Junction Deviation when CLASSIC_JERK is disabled
 #endif
 
-#define DEFAULT_JERK  11.0  // Used by Junction Deviation when CLASSIC_JERK is disabled
-#define DEFAULT_EJERK  5.0  // May be used by Linear Advance
+#define DEFAULT_EJERK  5.0   // May be used by Linear Advance
 
 /**
  * Junction Deviation Factor
@@ -1314,6 +1315,7 @@
  *   In below formula, we use Jerk and Accel of X axis
  */
 #if DISABLED(CLASSIC_JERK)
+  // [2024-06-13 hlo-world] Set Junciton Deviation formulaically instead of hardcoding it
   #define JUNCTION_DEVIATION_MM 0.4 * DEFAULT_JERK * DEFAULT_JERK / DEFAULT_ACCELERATION // (mm) Distance from real junction edge
   #define JD_HANDLE_SMALL_SEGMENTS                                                       // Use curvature estimation instead of just the junction angle for small segments (< 1mm) with large junction angles (> 135°).
 #endif
@@ -1560,17 +1562,17 @@
  *   Z probe offset: -below +above [the nozzle]
  *
  */
-#define NOZZLE_TO_PROBE_OFFSET { -17.7, -47.0, -1.95 }
+#define NOZZLE_TO_PROBE_OFFSET { -17.7, -47.0, -1.93 }
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
 #define PROBING_MARGIN 10
 
 // X and Y axis travel speed (mm/min) between probes
-#define XY_PROBE_FEEDRATE (133*60)
+#define XY_PROBE_FEEDRATE (150*60)
 
 // Feedrate (mm/min) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_FEEDRATE_FAST (4*60)
+#define Z_PROBE_FEEDRATE_FAST (20*60)
 
 // Feedrate (mm/min) for the "accurate" probe of each point
 #define Z_PROBE_FEEDRATE_SLOW (Z_PROBE_FEEDRATE_FAST / 2)
@@ -2037,7 +2039,7 @@
 #if EITHER(AUTO_BED_LEVELING_LINEAR, AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 5
+  #define GRID_MAX_POINTS_X 9
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Probe along the Y axis, advancing X after each column
@@ -2176,7 +2178,7 @@
 #endif
 
 // Homing speeds (linear=mm/min, rotational=°/min)
-#define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (4*60) }
+#define HOMING_FEEDRATE_MM_M { (150*60), (150*60), (20*60) }
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
@@ -2295,13 +2297,13 @@
 #define PREHEAT_1_LABEL       "PLA"
 #define PREHEAT_1_TEMP_HOTEND 180
 #define PREHEAT_1_TEMP_BED     70
-#define PREHEAT_1_TEMP_CHAMBER 35
+#define PREHEAT_1_TEMP_CHAMBER  0
 #define PREHEAT_1_FAN_SPEED     0 // Value from 0 to 255
 
 #define PREHEAT_2_LABEL       "PETG"
-#define PREHEAT_2_TEMP_HOTEND 230
-#define PREHEAT_2_TEMP_BED     70
-#define PREHEAT_2_TEMP_CHAMBER 35
+#define PREHEAT_2_TEMP_HOTEND 190
+#define PREHEAT_2_TEMP_BED     90
+#define PREHEAT_2_TEMP_CHAMBER  0
 #define PREHEAT_2_FAN_SPEED     0 // Value from 0 to 255
 
 // @section motion
