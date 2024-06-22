@@ -323,6 +323,8 @@ else ifeq ($(HARDWARE_MOTHERBOARD),1162)
 else ifeq ($(HARDWARE_MOTHERBOARD),1163)
 # Pxmalion Core I3
 else ifeq ($(HARDWARE_MOTHERBOARD),1164)
+# HICTOP MPX.3
+else ifeq ($(HARDWARE_MOTHERBOARD),1165)
 
 #
 # RAMBo and derivatives
