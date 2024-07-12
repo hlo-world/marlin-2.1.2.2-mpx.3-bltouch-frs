@@ -1234,18 +1234,18 @@
 // E-Axis, 3200 / (11.00mm Gear OD*pi) = 200*16 /(11*3.14) = 92.6 :: (STEPS_PER_REVOLUTION_E * EXTRUDER_GEAR_RATIO / (PINCH_WHEEL_DIAMETER * PI))
 // E-Axis, DEFAULT_FROM_HICTOP_FIRMWARE              = 94.4962144 :: DEFAULT_FROM_HICTOP_FIRMWARE
 // E-Axis, ADJUSTED_FROM_TEACHING_TECH_ESTEPS_CALIB  = 96.9191919 :: ADJUSTED_FROM_TEACHING_TECH_ESTEPS_CALIB
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 96.9191919 }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 1600, 96.9191919 }
 
 /**
  * Default Max Feed Rate (linear=mm/s, rotational=°/s)
  * Override with M203
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 500, 500, 20, 60 }
+#define DEFAULT_MAX_FEEDRATE          { 500, 500, 8, 60 }
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
-  #define MAX_FEEDRATE_EDIT_VALUES    { 1000, 1000, 40, 120 } // ...or, set your own edit limits
+  #define MAX_FEEDRATE_EDIT_VALUES    { 1000, 1000, 20, 120 } // ...or, set your own edit limits
 #endif
 
 /**
@@ -1570,7 +1570,7 @@
 #define XY_PROBE_FEEDRATE (150*60)
 
 // Feedrate (mm/min) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_FEEDRATE_FAST (10*60)
+#define Z_PROBE_FEEDRATE_FAST (8*60)
 
 // Feedrate (mm/min) for the "accurate" probe of each point
 #define Z_PROBE_FEEDRATE_SLOW (Z_PROBE_FEEDRATE_FAST / 2)
@@ -1773,7 +1773,7 @@
 // The size of the printable area
 #define X_BED_SIZE 305
 #define Y_BED_SIZE 305
-#define Z_MAX_HEIGHT 400
+#define Z_MAX_HEIGHT 330
 
 // Travel limits (linear=mm, rotational=°) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
@@ -2176,7 +2176,7 @@
 #endif
 
 // Homing speeds (linear=mm/min, rotational=°/min)
-#define HOMING_FEEDRATE_MM_M { (150*60), (150*60), (10*60) }
+#define HOMING_FEEDRATE_MM_M { (150*60), (150*60), (8*60) }
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
