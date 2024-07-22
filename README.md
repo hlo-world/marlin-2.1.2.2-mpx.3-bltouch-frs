@@ -1,3 +1,13 @@
+# Marlin MPX.3 GPIO Wiring
+
+Wiring for BLTouch and Filament runout sensor. Uses the D11 and D12 GPIO pins
+
+![marlin-mpx.3-gpio-wiring](https://github.com/hlo-world/marlin-2.1.2.2-mpx.3-bltouch-frs/blob/main/mpx3wiring.png)
+
+---
+
+# Marlin README:
+
 <p align="center"><img src="buildroot/share/pixmaps/logo/marlin-outrun-nf-500.png" height="250" alt="MarlinFirmware's logo" /></p>
 
 <h1 align="center">Marlin 3D Printer Firmware</h1>
